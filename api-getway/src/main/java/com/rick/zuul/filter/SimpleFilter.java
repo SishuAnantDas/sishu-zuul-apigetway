@@ -20,7 +20,7 @@ public class SimpleFilter extends ZuulFilter{
 
 	@Override
 	public Object run() throws ZuulException {
-		LOGGER.info("Inside  Simple Filter");
+		LOGGER.info("Inside  Simple Filter ");
 		
 		try {
 			Thread.sleep(20000);
