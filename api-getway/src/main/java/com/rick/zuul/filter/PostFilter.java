@@ -29,9 +29,12 @@ public class PostFilter extends ZuulFilter{
 	public Object run() throws ZuulException {
 		RequestContext context=RequestContext.getCurrentContext();
 		
+		
 		HttpServletResponse response=context.getResponse();
+		LOGGER.info("Before Modification Response status = {}", response.getStatus());
+		context.getResponse().setStatus(800);
 		if (!response.equals(null)) {
-			LOGGER.info("Response status = {}", response.getStatus());
+			LOGGER.info("After modification Response status = {}", response.getStatus());
 			try(InputStream is=context.getResponseDataStream()) {
 				String responseData=CharStreams.toString(new InputStreamReader(is, CharEncoding.UTF_8));
 				LOGGER.info("Response Data = {}", responseData);
