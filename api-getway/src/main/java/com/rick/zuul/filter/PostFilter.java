@@ -14,6 +14,7 @@ import com.google.common.io.CharStreams;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import com.rick.zuul.exception.ZullApiGetwayException;
 @Configuration
 public class PostFilter extends ZuulFilter{
 	
@@ -26,7 +27,6 @@ public class PostFilter extends ZuulFilter{
 
 	@Override
 	public Object run() throws ZuulException {
-		System.out.println("In Post Filter");
 		RequestContext context=RequestContext.getCurrentContext();
 		
 		HttpServletResponse response=context.getResponse();
@@ -35,9 +35,10 @@ public class PostFilter extends ZuulFilter{
 			try(InputStream is=context.getResponseDataStream()) {
 				String responseData=CharStreams.toString(new InputStreamReader(is, CharEncoding.UTF_8));
 				LOGGER.info("Response Data = {}", responseData);
+				//context.setResponseBody(responseData);//Filter threw Exception
 				context.setResponseBody(responseData);
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new ZullApiGetwayException("Respose body not set");
 			}
 		}
 		

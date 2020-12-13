@@ -9,11 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-
 @Configuration
-public class PreFilter extends ZuulFilter{
-	
-	private static final Logger LOGGER=LoggerFactory.getLogger(PreFilter.class);
+public class PreSecondFilter extends ZuulFilter{
+	private static final Logger LOGGER=LoggerFactory.getLogger(PreSecondFilter.class);
 
 	@Override
 	public boolean shouldFilter() {
@@ -23,11 +21,8 @@ public class PreFilter extends ZuulFilter{
 	@Override
 	public Object run() throws ZuulException {
 		RequestContext context=RequestContext.getCurrentContext();
-		
 		HttpServletRequest request=context.getRequest();
-		LOGGER.info("Request method()={}, URL={} ",request.getMethod(),request.getRequestURI().toString() );
-		
-		
+		LOGGER.info("[PreSecondFilter] request method = {},url = {}", request.getMethod(),request.getRequestURL());
 		return null;
 	}
 
@@ -38,7 +33,7 @@ public class PreFilter extends ZuulFilter{
 
 	@Override
 	public int filterOrder() {
-		return 2;
+		return 1;
 	}
 
 }
