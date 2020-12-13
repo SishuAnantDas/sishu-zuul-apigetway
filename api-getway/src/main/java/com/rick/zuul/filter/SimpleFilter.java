@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
-//@Configuration
+@Configuration
 public class SimpleFilter extends ZuulFilter{
 
 	private static final Logger LOGGER=LoggerFactory.getLogger(SimpleFilter.class);
@@ -15,12 +15,12 @@ public class SimpleFilter extends ZuulFilter{
 	public boolean shouldFilter() {
 		RequestContext context=RequestContext.getCurrentContext();
 		String param=context.getRequest().getParameter("deviceType");
-		return param!=null && param.equals("BrokenDevice") ? false : true;
+		return param!=null && param.equals("BrokenDevice") ? true : true;
 	}
 
 	@Override
 	public Object run() throws ZuulException {
-		LOGGER.info("In SimpleFilter");
+		LOGGER.info("Inside  Simple Filter");
 		
 		try {
 			Thread.sleep(20000);
@@ -32,12 +32,12 @@ public class SimpleFilter extends ZuulFilter{
 
 	@Override
 	public String filterType() {
-		return "custom";
+		return "pre";
 	}
 
 	@Override
 	public int filterOrder() {
-		return 1;
+		return 5;
 	}
 
 }
