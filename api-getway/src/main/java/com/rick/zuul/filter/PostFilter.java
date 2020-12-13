@@ -31,10 +31,10 @@ public class PostFilter extends ZuulFilter{
 		
 		HttpServletResponse response=context.getResponse();
 		if (!response.equals(null)) {
-			System.out.println("Response status code: "+response.getStatus());
+			LOGGER.info("Response status = {}", response.getStatus());
 			try(InputStream is=context.getResponseDataStream()) {
 				String responseData=CharStreams.toString(new InputStreamReader(is, CharEncoding.UTF_8));
-				System.out.println("Response Data: "+ responseData);
+				LOGGER.info("Response Data = {}", responseData);
 				context.setResponseBody(responseData);
 			} catch (Exception e) {
 				e.printStackTrace();
